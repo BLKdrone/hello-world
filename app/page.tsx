@@ -1,102 +1,92 @@
-import Image from "next/image";
+'use client';
+
+import Image from 'next/image';
+import React from 'react';
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const benefits = [
+    {
+      title: "Boosts Immunity",
+      description:
+        "Daisy flowers contain antioxidants that help strengthen the immune system and protect against illnesses.",
+      image: "/images/benefit1.jpg",
+    },
+    {
+      title: "Anti-inflammatory Properties",
+      description:
+        "Extracts from daisies can reduce inflammation and soothe irritated skin or tissues.",
+      image: "/images/benefit2.jpg",
+    },
+    {
+      title: "Rich in Vitamins",
+      description:
+        "Daisies are a source of vitamins A and C, which promote healthy skin and overall wellness.",
+      image: "/images/benefit3.jpg",
+    },
+  ];
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  return (
+    <div className="min-h-screen flex flex-col bg-[#fffdf5] text-gray-900">
+      {/* Navbar */}
+      <nav className="bg-yellow-400 text-green-800 p-4 flex items-center justify-between shadow-md">
+        <div className="text-2xl font-bold">Daisy Benefits</div>
+        <div className="space-x-4">
+          <button className="px-3 py-1 rounded bg-white text-yellow-500 font-semibold hover:bg-yellow-100">
+            English
+          </button>
+          <button className="px-3 py-1 rounded bg-transparent border border-white hover:bg-white hover:text-yellow-500 font-semibold">
+            ไทย
+          </button>
         </div>
+      </nav>
+
+      {/* Dropdown UI */}
+      <div className="p-4 flex justify-center bg-[#f9f9f9]">
+        <details className="dropdown">
+          <summary className="btn m-1 bg-yellow-300 text-green-700 rounded px-4 py-2 cursor-pointer hover:bg-yellow-400">
+            open or close
+          </summary>
+          <ul className="menu dropdown-content bg-white rounded-box z-10 w-52 p-2 shadow-md border border-yellow-300">
+            <li><a className="hover:text-yellow-600 cursor-pointer">Item 1</a></li>
+            <li><a className="hover:text-yellow-600 cursor-pointer">Item 2</a></li>
+          </ul>
+        </details>
+      </div>
+
+      {/* Main Content */}
+      <main className="flex flex-1 p-8 gap-8 justify-center items-start bg-[#fffdf5]">
+        {benefits.map(({ title, description, image }, idx) => (
+          <div
+            key={idx}
+            className="flex flex-col items-center bg-white shadow-md rounded-lg p-6 max-w-xs text-center"
+          >
+            <div className="relative w-40 h-40 mb-4 rounded-lg overflow-hidden">
+              <Image
+                src={image}
+                alt={title}
+                fill
+                style={{ objectFit: 'cover' }}
+                priority={idx === 0}
+              />
+            </div>
+            <h3 className="text-xl font-semibold mb-2 text-yellow-600">{title}</h3>
+            <p className="text-gray-700">{description}</p>
+          </div>
+        ))}
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+
+      {/* Daisy History Section */}
+      <section className="bg-white p-8 max-w-4xl mx-auto rounded-lg shadow-md my-8">
+        <h2 className="text-2xl font-bold mb-4 text-yellow-600">History of the Daisy Flower</h2>
+        <p className="text-gray-800 leading-relaxed">
+          The daisy flower, belonging to the family Asteraceae, has been cherished for centuries for its simple beauty and symbolic meanings. Originating in Europe and temperate regions of Asia, daisies have been associated with purity, innocence, and new beginnings in various cultures.  
+          In ancient times, the daisy was linked to the goddess Freya in Norse mythology, symbolizing love, fertility, and beauty. Over the centuries, the daisy has also been used in herbal medicine for its anti-inflammatory and healing properties. Today, daisies are popular in gardens and floral arrangements worldwide, celebrated for their cheerful appearance and natural charm.
+        </p>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-yellow-400 text-green-800 text-center p-4">
+        &copy; 2025 Daisy Benefits. All rights reserved.
       </footer>
     </div>
   );
