@@ -1,9 +1,14 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
-import React from 'react';
+import Image from "next/image";
+import React, { useState, useEffect } from "react";
 
-export default function Home() {
+interface User {
+  id: number;
+  name: string;
+}
+
+const Home = () => {
   const benefits = [
     {
       title: "Boosts Immunity",
@@ -25,13 +30,23 @@ export default function Home() {
     },
   ];
 
+  const [users, setUsers] = useState<User[]>([]);
+
+  useEffect(() => {
+    fetch("/api/users")
+      .then((res) => res.json())
+      .then((data) => setUsers(data));
+  }, []);
+
   return (
     <div className="min-h-screen flex flex-col bg-[#fffdf5] text-gray-900">
       {/* Navbar */}
       <nav className="bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-500 text-green-900 p-5 flex items-center justify-between shadow-lg sticky top-0 z-20">
         <div className="flex items-center space-x-3">
           <span className="text-3xl">🌼</span>
-          <div className="text-3xl font-extrabold tracking-wide select-none">Daisy Benefits</div>
+          <div className="text-3xl font-extrabold tracking-wide select-none">
+            Daisy Benefits
+          </div>
         </div>
         <div className="space-x-4 flex items-center">
           <button className="px-4 py-2 rounded-full bg-white text-yellow-600 font-semibold shadow-md hover:bg-yellow-100 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition">
@@ -43,6 +58,13 @@ export default function Home() {
         </div>
       </nav>
 
+      {/* Users list */}
+      <ul>
+        {users.map((user) => (
+          <li key={user.id}>{user.name}</li>
+        ))}
+      </ul>
+
       {/* Dropdown UI */}
       <div className="p-4 flex justify-center bg-[#f9f9f9]">
         <details className="dropdown">
@@ -50,8 +72,12 @@ export default function Home() {
             open or close
           </summary>
           <ul className="menu dropdown-content bg-white rounded-box z-10 w-52 p-2 shadow-md border border-yellow-300">
-            <li><a className="hover:text-yellow-600 cursor-pointer">Item 1</a></li>
-            <li><a className="hover:text-yellow-600 cursor-pointer">Item 2</a></li>
+            <li>
+              <a className="hover:text-yellow-600 cursor-pointer">Item 1</a>
+            </li>
+            <li>
+              <a className="hover:text-yellow-600 cursor-pointer">Item 2</a>
+            </li>
           </ul>
         </details>
       </div>
@@ -68,11 +94,13 @@ export default function Home() {
                 src={image}
                 alt={title}
                 fill
-                style={{ objectFit: 'cover' }}
+                style={{ objectFit: "cover" }}
                 priority={idx === 0}
               />
             </div>
-            <h3 className="text-xl font-semibold mb-2 text-yellow-600">{title}</h3>
+            <h3 className="text-xl font-semibold mb-2 text-yellow-600">
+              {title}
+            </h3>
             <p className="text-gray-700">{description}</p>
           </div>
         ))}
@@ -89,10 +117,21 @@ export default function Home() {
             />
           </div>
           <div className="lg:w-1/2 lg:pl-12 text-center lg:text-left">
-            <h1 className="text-5xl font-bold mb-6 text-yellow-600 select-none">History of the Daisy Flower</h1>
+            <h1 className="text-5xl font-bold mb-6 text-yellow-600 select-none">
+              History of the Daisy Flower
+            </h1>
             <p className="py-4 text-gray-800 leading-relaxed mb-6">
-              The daisy flower, belonging to the family Asteraceae, has been cherished for centuries for its simple beauty and symbolic meanings. Originating in Europe and temperate regions of Asia, daisies have been associated with purity, innocence, and new beginnings in various cultures.
-              In ancient times, the daisy was linked to the goddess Freya in Norse mythology, symbolizing love, fertility, and beauty. Over the centuries, the daisy has also been used in herbal medicine for its anti-inflammatory and healing properties. Today, daisies are popular in gardens and floral arrangements worldwide, celebrated for their cheerful appearance and natural charm.
+              The daisy flower, belonging to the family Asteraceae, has been
+              cherished for centuries for its simple beauty and symbolic
+              meanings. Originating in Europe and temperate regions of Asia,
+              daisies have been associated with purity, innocence, and new
+              beginnings in various cultures. In ancient times, the daisy was
+              linked to the goddess Freya in Norse mythology, symbolizing love,
+              fertility, and beauty. Over the centuries, the daisy has also been
+              used in herbal medicine for its anti-inflammatory and healing
+              properties. Today, daisies are popular in gardens and floral
+              arrangements worldwide, celebrated for their cheerful appearance
+              and natural charm.
             </p>
             <button className="btn bg-yellow-400 text-green-900 hover:bg-yellow-500 hover:text-green-950 font-semibold px-6 py-3 rounded-lg shadow-md transition">
               Learn More
@@ -107,4 +146,6 @@ export default function Home() {
       </footer>
     </div>
   );
-}
+};
+
+export default Home;
